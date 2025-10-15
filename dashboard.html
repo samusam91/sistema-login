@@ -53,7 +53,7 @@
             font-size: 14px;
         }
         .nav-tab.active {
-            background: #ff6b35;
+            background: #00d084;
             color: white;
         }
         .nav-tab:hover:not(.active) {
@@ -72,8 +72,13 @@
         }
         .profile-grid {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr;
             gap: 30px;
+        }
+        @media (min-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr 2fr;
+            }
         }
         .profile-card {
             background: #2d2d2d;
@@ -86,7 +91,7 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            background: linear-gradient(135deg, #00d084 0%, #00b36b 100%);
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
@@ -109,7 +114,7 @@
         .stat-number {
             font-size: 2em;
             font-weight: 800;
-            color: #ff6b35;
+            color: #00d084;
         }
         .wod-form {
             background: #2d2d2d;
@@ -139,10 +144,10 @@
         }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
-            border-color: #ff6b35;
+            border-color: #00d084;
         }
         .btn {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            background: linear-gradient(135deg, #00d084 0%, #00b36b 100%);
             color: white;
             padding: 12px 25px;
             border: none;
@@ -154,7 +159,7 @@
         }
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 208, 132, 0.4);
         }
         .wod-history {
             margin-top: 30px;
@@ -164,7 +169,7 @@
             padding: 20px;
             border-radius: 12px;
             margin-bottom: 15px;
-            border-left: 4px solid #ff6b35;
+            border-left: 4px solid #00d084;
             border: 1px solid #444;
         }
         .leaderboard {
@@ -185,7 +190,7 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: #ff6b35;
+            background: #00d084;
             color: white;
             display: flex;
             align-items: center;
@@ -216,10 +221,10 @@
             padding: 25px;
             border-radius: 12px;
             border: 1px solid #444;
-            border-left: 4px solid #ff6b35;
+            border-left: 4px solid #00d084;
         }
         .event-date {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            background: linear-gradient(135deg, #00d084 0%, #00b36b 100%);
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
@@ -232,16 +237,16 @@
         }
         .logout-btn {
             background: transparent;
-            color: #ff6b35;
+            color: #00d084;
             padding: 10px 20px;
-            border: 1px solid #ff6b35;
+            border: 1px solid #00d084;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
         }
         .logout-btn:hover {
-            background: #ff6b35;
+            background: #00d084;
             color: white;
         }
         h1, h2, h3, h4 {
@@ -249,8 +254,24 @@
             font-weight: 700;
         }
         h3 {
-            color: #ff6b35;
+            color: #00d084;
             margin-bottom: 20px;
+        }
+        .version-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(26, 26, 26, 0.9);
+            color: #888;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            border: 1px solid #333;
+            z-index: 1000;
+        }
+        .version-info .version {
+            color: #00d084;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -440,7 +461,14 @@
         </div>
     </div>
 
+    <!-- Version Info -->
+    <div class="version-info">
+        <span class="version">v0.1</span> • <span id="versionDate"></span>
+    </div>
+
     <script>
+        // Set version date to today
+        document.getElementById('versionDate').textContent = new Date().toLocaleDateString('it-IT');
         function logout() {
             if (confirm('Sei sicuro di voler uscire?')) {
                 window.location.href = 'index.html';
