@@ -3,76 +3,439 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Sistema</title>
+    <title>Demantur CrossFit - Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
         .dashboard {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
         .header {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid #333;
         }
-        .services-grid {
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            background: #1a1a1a;
+            padding: 5px;
+            border-radius: 12px;
+        }
+        .nav-tab {
+            padding: 15px 25px;
+            background: transparent;
+            color: #888;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .nav-tab.active {
+            background: #ff6b35;
+            color: white;
+        }
+        .nav-tab:hover:not(.active) {
+            background: #2d2d2d;
+            color: #fff;
+        }
+        .tab-content {
+            display: none;
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .profile-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+        .profile-card {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #444;
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
-        .service-card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .stat-card {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 12px;
             text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s;
+            border: 1px solid #444;
         }
-        .service-card:hover {
-            transform: translateY(-5px);
+        .stat-number {
+            font-size: 2em;
+            font-weight: 800;
+            color: #ff6b35;
+        }
+        .wod-form {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #444;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #1a1a1a;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+        .btn {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+        .wod-history {
+            margin-top: 30px;
+        }
+        .wod-item {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff6b35;
+            border: 1px solid #444;
+        }
+        .leaderboard {
+            background: #2d2d2d;
+            border-radius: 12px;
+            border: 1px solid #444;
+        }
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #444;
+        }
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+        .rank {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ff6b35;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin-right: 20px;
+        }
+        .rank.gold { background: #ffd700; color: #333; }
+        .rank.silver { background: #c0c0c0; color: #333; }
+        .rank.bronze { background: #cd7f32; color: white; }
+        .athlete-info {
+            flex: 1;
+        }
+        .athlete-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .athlete-score {
+            color: #888;
+        }
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        .event-card {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #444;
+            border-left: 4px solid #ff6b35;
+        }
+        .event-date {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .logout-btn {
-            background: #dc3545;
-            color: white;
+            background: transparent;
+            color: #ff6b35;
             padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+            border: 1px solid #ff6b35;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .logout-btn:hover {
+            background: #ff6b35;
+            color: white;
+        }
+        h1, h2, h3, h4 {
+            color: #fff;
+            font-weight: 700;
+        }
+        h3 {
+            color: #ff6b35;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="dashboard">
         <div class="header">
-            <h1>Benvenuto nel Sistema</h1>
+            <h1>🏋️ Demantur CrossFit</h1>
             <button class="logout-btn" onclick="logout()">Logout</button>
         </div>
         
-        <div class="services-grid">
-            <div class="service-card" onclick="openService('fitness')">
-                <h3>📊 Metriche Fitness</h3>
-                <p>Monitora i tuoi progressi fitness, peso, allenamenti e obiettivi</p>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('profile')">👤 Profilo</button>
+            <button class="nav-tab" onclick="showTab('wod')">💪 WOD</button>
+            <button class="nav-tab" onclick="showTab('leaderboard')">🏆 Classifica</button>
+            <button class="nav-tab" onclick="showTab('events')">📅 Eventi</button>
+        </div>
+
+        <!-- PROFILO -->
+        <div id="profile" class="tab-content active">
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <div class="profile-avatar">👤</div>
+                    <h2 id="userName">Marco Rossi</h2>
+                    <p><strong>Email:</strong> marco.rossi@email.com</p>
+                    <p><strong>Età:</strong> 28 anni</p>
+                    <p><strong>Peso:</strong> 75 kg</p>
+                    <p><strong>Altezza:</strong> 180 cm</p>
+                    <p><strong>Membro dal:</strong> Gennaio 2023</p>
+                </div>
+                <div>
+                    <h3>Le tue statistiche</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">156</div>
+                            <div>WOD Completati</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">85kg</div>
+                            <div>Back Squat PR</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3:45</div>
+                            <div>Fran PR</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">12</div>
+                            <div>Posizione Classifica</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WOD -->
+        <div id="wod" class="tab-content">
+            <div class="wod-form">
+                <h3>Registra il tuo WOD</h3>
+                <form onsubmit="addWod(event)">
+                    <div class="form-group">
+                        <label>Nome WOD:</label>
+                        <input type="text" id="wodName" placeholder="es. Fran, Cindy, Helen..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo:</label>
+                        <select id="wodType" required>
+                            <option value="">Seleziona tipo</option>
+                            <option value="AMRAP">AMRAP (As Many Rounds As Possible)</option>
+                            <option value="For Time">For Time</option>
+                            <option value="EMOM">EMOM (Every Minute On the Minute)</option>
+                            <option value="Tabata">Tabata</option>
+                            <option value="Strength">Strength Training</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Risultato/Tempo:</label>
+                        <input type="text" id="wodResult" placeholder="es. 3:45, 15 rounds, 85kg..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Note:</label>
+                        <textarea id="wodNotes" rows="3" placeholder="Descrivi il WOD e le tue sensazioni..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Salva WOD</button>
+                </form>
             </div>
             
-            <div class="service-card" onclick="openService('work')">
-                <h3>💼 Dati Aziendali</h3>
-                <p>Gestisci metriche di lavoro, progetti e performance aziendali</p>
+            <div class="wod-history">
+                <h3>I tuoi ultimi WOD</h3>
+                <div id="wodList">
+                    <div class="wod-item">
+                        <h4>Fran</h4>
+                        <p><strong>Tipo:</strong> For Time | <strong>Risultato:</strong> 3:45</p>
+                        <p><strong>Data:</strong> 15 Gen 2024</p>
+                        <p>21-15-9 Thrusters (43kg) + Pull-ups. Ottima performance!</p>
+                    </div>
+                    <div class="wod-item">
+                        <h4>Cindy</h4>
+                        <p><strong>Tipo:</strong> AMRAP 20min | <strong>Risultato:</strong> 18 rounds</p>
+                        <p><strong>Data:</strong> 12 Gen 2024</p>
+                        <p>5 Pull-ups, 10 Push-ups, 15 Air Squats. Buon ritmo mantenuto.</p>
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <!-- CLASSIFICA -->
+        <div id="leaderboard" class="tab-content">
+            <h3>🏆 Classifica Demantur (Aggiornata alle 00:00)</h3>
+            <p style="margin-bottom: 30px; color: #666;">Classifica basata sui punti accumulati negli ultimi 30 giorni</p>
             
-            <div class="service-card" onclick="openService('analytics')">
-                <h3>📈 Analytics</h3>
-                <p>Visualizza report e analisi dettagliate dei tuoi dati</p>
+            <div class="leaderboard">
+                <div class="leaderboard-item">
+                    <div class="rank gold">1</div>
+                    <div class="athlete-info">
+                        <div class="athlete-name">Alessandro Bianchi</div>
+                        <div class="athlete-score">2,847 punti • 45 WOD completati</div>
+                    </div>
+                </div>
+                <div class="leaderboard-item">
+                    <div class="rank silver">2</div>
+                    <div class="athlete-info">
+                        <div class="athlete-name">Giulia Ferrari</div>
+                        <div class="athlete-score">2,756 punti • 42 WOD completati</div>
+                    </div>
+                </div>
+                <div class="leaderboard-item">
+                    <div class="rank bronze">3</div>
+                    <div class="athlete-info">
+                        <div class="athlete-name">Luca Verdi</div>
+                        <div class="athlete-score">2,634 punti • 38 WOD completati</div>
+                    </div>
+                </div>
+                <div class="leaderboard-item">
+                    <div class="rank">4</div>
+                    <div class="athlete-info">
+                        <div class="athlete-name">Sara Conti</div>
+                        <div class="athlete-score">2,521 punti • 41 WOD completati</div>
+                    </div>
+                </div>
+                <div class="leaderboard-item">
+                    <div class="rank">5</div>
+                    <div class="athlete-info">
+                        <div class="athlete-name">Matteo Ricci</div>
+                        <div class="athlete-score">2,445 punti • 36 WOD completati</div>
+                    </div>
+                </div>
+                <div class="leaderboard-item" style="background: #f0f8ff;">
+                    <div class="rank">12</div>
+                    <div class="athlete-info">
+                        <div class="athlete-name">Marco Rossi (Tu)</div>
+                        <div class="athlete-score">2,156 punti • 32 WOD completati</div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="service-card" onclick="openService('settings')">
-                <h3>⚙️ Impostazioni</h3>
-                <p>Configura il tuo profilo e le preferenze del sistema</p>
+        </div>
+
+        <!-- EVENTI -->
+        <div id="events" class="tab-content">
+            <h3>📅 Prossimi Eventi Demantur</h3>
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-date">25 FEB 2024</div>
+                    <h4>Demantur Open 2024</h4>
+                    <p>Competizione aperta a tutti i livelli. 3 WOD in una giornata per testare le tue capacità!</p>
+                    <p><strong>Dove:</strong> Palestra Demantur</p>
+                    <p><strong>Iscrizioni:</strong> Aperte (45/60 posti)</p>
+                    <button class="btn" onclick="registerEvent('open2024')">Iscriviti</button>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">10 MAR 2024</div>
+                    <h4>Workshop Mobility</h4>
+                    <p>Seminario sulla mobilità e prevenzione infortuni con coach certificato.</p>
+                    <p><strong>Dove:</strong> Sala corsi Demantur</p>
+                    <p><strong>Iscrizioni:</strong> Aperte (12/20 posti)</p>
+                    <button class="btn" onclick="registerEvent('mobility')">Iscriviti</button>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">22 MAR 2024</div>
+                    <h4>Team Challenge</h4>
+                    <p>Sfida a squadre! Forma il tuo team di 4 persone e compete per il titolo.</p>
+                    <p><strong>Dove:</strong> Palestra Demantur</p>
+                    <p><strong>Iscrizioni:</strong> Aperte (8/12 team)</p>
+                    <button class="btn" onclick="registerEvent('team')">Iscriviti</button>
+                </div>
             </div>
         </div>
     </div>
@@ -84,8 +447,46 @@
             }
         }
         
-        function openService(service) {
-            alert(`Servizio "${service}" in sviluppo. Sarà disponibile nella prossima versione.`);
+        function showTab(tabName) {
+            // Nascondi tutti i tab
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostra il tab selezionato
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function addWod(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('wodName').value;
+            const type = document.getElementById('wodType').value;
+            const result = document.getElementById('wodResult').value;
+            const notes = document.getElementById('wodNotes').value;
+            
+            const wodItem = document.createElement('div');
+            wodItem.className = 'wod-item';
+            wodItem.innerHTML = `
+                <h4>${name}</h4>
+                <p><strong>Tipo:</strong> ${type} | <strong>Risultato:</strong> ${result}</p>
+                <p><strong>Data:</strong> ${new Date().toLocaleDateString('it-IT')}</p>
+                <p>${notes || 'Nessuna nota aggiunta.'}</p>
+            `;
+            
+            document.getElementById('wodList').insertBefore(wodItem, document.getElementById('wodList').firstChild);
+            
+            // Reset form
+            event.target.reset();
+            alert('WOD registrato con successo!');
+        }
+        
+        function registerEvent(eventId) {
+            alert('Iscrizione in fase di sviluppo. Contatta la reception per iscriverti!');
         }
     </script>
 </body>
