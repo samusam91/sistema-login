@@ -51,7 +51,10 @@
     <div class="dashboard">
         <div class="header">
             <h1>Benvenuto nel Sistema</h1>
-            <button class="logout-btn" onclick="logout()">Logout</button>
+            <div>
+                <button onclick="exportUsers()" style="margin-right: 10px; background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Esporta Utenti</button>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
         </div>
         
         <div class="services-grid">
@@ -86,6 +89,27 @@
         
         function openService(service) {
             alert(`Servizio "${service}" in sviluppo. Sarà disponibile nella prossima versione.`);
+        }
+        
+        function exportUsers() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            if (users.length === 0) {
+                alert('Nessun utente registrato');
+                return;
+            }
+            
+            const csv = [
+                'Username,Email,Data Registrazione',
+                ...users.map(u => `${u.username},${u.email},${new Date(u.registrationDate).toLocaleDateString('it-IT')}`)
+            ].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'utenti_registrati.csv';
+            a.click();
+            URL.revokeObjectURL(url);
         }
     </script>
 </body>
