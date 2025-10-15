@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>Benvenuto nel Sistema</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card" onclick="openService('fitness')">
+                <h3>📊 Metriche Fitness</h3>
+                <p>Monitora i tuoi progressi fitness, peso, allenamenti e obiettivi</p>
+            </div>
+            
+            <div class="service-card" onclick="openService('work')">
+                <h3>💼 Dati Aziendali</h3>
+                <p>Gestisci metriche di lavoro, progetti e performance aziendali</p>
+            </div>
+            
+            <div class="service-card" onclick="openService('analytics')">
+                <h3>📈 Analytics</h3>
+                <p>Visualizza report e analisi dettagliate dei tuoi dati</p>
+            </div>
+            
+            <div class="service-card" onclick="openService('settings')">
+                <h3>⚙️ Impostazioni</h3>
+                <p>Configura il tuo profilo e le preferenze del sistema</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            if (confirm('Sei sicuro di voler uscire?')) {
+                window.location.href = 'index.html';
+            }
+        }
+        
+        function openService(service) {
+            alert(`Servizio "${service}" in sviluppo. Sarà disponibile nella prossima versione.`);
+        }
+    </script>
+</body>
+</html>
