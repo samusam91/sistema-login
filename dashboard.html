@@ -358,7 +358,7 @@
         <!-- CLASSIFICA -->
         <div id="leaderboard" class="tab-content">
             <h3>🏆 Classifica Demantur (Aggiornata alle 00:00)</h3>
-            <p style="margin-bottom: 30px; color: #666;">Classifica basata sui punti accumulati negli ultimi 30 giorni</p>
+            <p style="margin-bottom: 30px; color: #888;">Classifica basata sui punti accumulati negli ultimi 30 giorni</p>
             
             <div class="leaderboard">
                 <div class="leaderboard-item">
@@ -396,7 +396,7 @@
                         <div class="athlete-score">2,445 punti • 36 WOD completati</div>
                     </div>
                 </div>
-                <div class="leaderboard-item" style="background: #f0f8ff;">
+                <div class="leaderboard-item" style="background: #2a2a2a;">
                     <div class="rank">12</div>
                     <div class="athlete-info">
                         <div class="athlete-name">Marco Rossi (Tu)</div>
@@ -448,7 +448,6 @@
         }
         
         function showTab(tabName) {
-            // Nascondi tutti i tab
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
@@ -456,7 +455,6 @@
                 tab.classList.remove('active');
             });
             
-            // Mostra il tab selezionato
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
         }
@@ -480,7 +478,6 @@
             
             document.getElementById('wodList').insertBefore(wodItem, document.getElementById('wodList').firstChild);
             
-            // Reset form
             event.target.reset();
             alert('WOD registrato con successo!');
         }
